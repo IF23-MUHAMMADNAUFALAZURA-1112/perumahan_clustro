@@ -10,11 +10,17 @@ use App\Models\Admin;
 
 class AuthController extends Controller
 {
+    /**
+     * Tampilkan form login admin.
+     */
     public function showLoginForm()
     {
         return view('admin.login');
     }
 
+    /**
+     * Proses login admin.
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -22,19 +28,29 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        // Cek admin berdasarkan username
         $admin = Admin::where('username', $request->username)->first();
 
         if ($admin && Hash::check($request->password, $admin->password)) {
+            // Login berhasil
             Auth::guard('admin')->login($admin);
-            return redirect()->route('admin.dashboard');
+
+            // Redirect ke dashboard admin dengan pesan sukses
+            return redirect()->route('admin.dashboard')
+                ->with('success', 'Berhasil login sebagai admin.');
         }
 
-        return back()->with('error', 'Username atau password salah');
+        // Login gagal
+        return back()->with('error', 'Username atau password salah.');
     }
 
+    /**
+     * Logout admin.
+     */
     public function logout()
     {
         Auth::guard('admin')->logout();
-        return redirect()->route('admin.login');
+        return redirect()->route('admin.login')
+            ->with('success', 'Anda telah logout.');
     }
 }

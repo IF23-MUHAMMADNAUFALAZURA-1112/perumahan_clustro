@@ -6,8 +6,11 @@ use App\Http\Controllers\Admin\{
     DashboardController,
     PengajuanController,
     TamuController,
-    LaporanController
+    LaporanController,
+    UserAksesController
 };
+
+
 
 // Halaman Welcome
 Route::get('/', function () {
@@ -25,7 +28,12 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/monitoring', [TamuController::class, 'index'])->name('admin.monitoring');
     Route::get('/admin/laporan', [LaporanController::class, 'index'])->name('admin.laporan');
     Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+    Route::get('/admin/dataUsers', [UserAksesController::class, 'index'])->name('admin.dataUsers');
+Route::post('/admin/users/{id}/toggleAkses', [UserAksesController::class, 'toggleAkses'])->name('admin.users.toggleAkses');
+Route::post('/admin/users/{id}/changeRole', [UserAksesController::class, 'changeRole'])->name('admin.users.changeRole');
 });
+
+
 // // Route::get('/test-email', function () {
 // //     try {
 // //         \Mail::raw('Tes pengiriman email berhasil!', function ($message) {

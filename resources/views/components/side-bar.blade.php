@@ -1,7 +1,8 @@
-<aside class="w-full lg:w-64 h-screen bg-[#D3D3D3] shadow-lg p-6">
-    <!-- Logo di sebelah kiri tulisan "Admin RT" -->
+<!-- Tambahkan ini di bagian atas halaman Blade layout utama (atau di <head>) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<aside class="w-full lg:w-64 min-h-screen bg-[#D3D3D3] shadow-lg p-6">
     <div class="mb-6 flex items-center space-x-3">
-        <!-- Ganti 'path-to-your-logo.png' dengan path logo Anda -->
         <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8" />
         <h2 class="text-2xl font-bold text-black">Admin RT</h2>
     </div>
@@ -23,8 +24,12 @@
             <i class="bi bi-bar-chart-line"></i>
             <span>Laporan Wilayah</span>
         </a>
+        <a href="{{ route('admin.dataUsers') }}" class="flex items-center space-x-3 text-black hover:text-white active:text-white">
+            <i class="bi bi-people"></i>
+            <span>Kelola Data User</span>
+        </a>
 
-        <!-- Logout pakai Form POST -->
+        <!-- Logout dengan konfirmasi SweetAlert -->
         <form action="{{ route('admin.logout') }}" method="POST" id="logoutForm">
             @csrf
             <button type="submit" class="flex items-center space-x-3 text-red-600 hover:text-red-800 w-full text-left">
@@ -35,31 +40,23 @@
     </nav>
 </aside>
 
-<!-- Menyisipkan JavaScript di bawah -->
 <script>
-    // Fungsi konfirmasi logout
-    function confirmLogout() {
-        // Menampilkan dialog konfirmasi
-        if (confirm("Apakah Anda yakin ingin keluar?")) {
-            // Jika pengguna mengonfirmasi logout, form akan disubmit
-            return true;
-        } else {
-            // Jika pengguna membatalkan, form tidak disubmit
-            return false;
-        }
-    }
-
-    // Menambahkan event listener ke form logout
     document.getElementById("logoutForm").addEventListener("submit", function(event) {
-        // Mencegah form submit langsung
         event.preventDefault();
-        
-        // Menampilkan alert
-        alert("Sesi Anda berhasil diakhiri.");
-        
-        // Mengonfirmasi dan mengirimkan form setelah alert
-        if (confirmLogout()) {
-            this.submit(); // Jika konfirmasi berhasil, submit form
-        }
+
+        Swal.fire({
+            title: 'Yakin ingin logout?',
+            text: "Sesi Anda akan diakhiri.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, logout',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit(); // Submit form jika dikonfirmasi
+            }
+        });
     });
 </script>
