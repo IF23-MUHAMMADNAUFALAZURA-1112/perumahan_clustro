@@ -6,6 +6,7 @@
     <title>Kelola Data Pengguna</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <!DOCTYPE html>

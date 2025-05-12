@@ -8,11 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 min-h-screen flex">
-
+<body class="bg-gray-100">
 
     <!-- Wrapper untuk Flexbox -->
-   <div class="flex flex-col lg:flex-row min-h-screen w-full">
+    <div class="flex flex-col lg:flex-row">
 
         <!-- Panggil Sidebar Komponen -->
         <x-side-bar class="lg:w-64 w-full" />
